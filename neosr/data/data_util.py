@@ -156,12 +156,12 @@ def paired_paths_from_folder(
 
     input_paths = [
         path
-        for path in scandir(input_folder, recursive=True, full_path=True)
+        for path in scandir(input_folder, recursive=False, full_path=True)
         if path.lower().endswith(extensions)
     ]
     gt_paths = [
         path
-        for path in scandir(gt_folder, recursive=True, full_path=True)
+        for path in scandir(gt_folder, recursive=False, full_path=True)
         if path.lower().endswith(extensions)
     ]
 

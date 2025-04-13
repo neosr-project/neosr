@@ -127,6 +127,14 @@ def build_dataloader(
             "shuffle": False,
             "num_workers": 0,
         }
+    # evaluation
+    elif phase in {"eval"}:
+        dataloader_args = {
+            "dataset": dataset,
+            "batch_size": 1,
+            "shuffle": False,
+            "num_workers": 0,
+        }
     else:
         msg = f"Wrong dataset phase: {phase}. Supported ones are 'train', 'val' and 'test'."
         raise ValueError(msg)

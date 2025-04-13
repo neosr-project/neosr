@@ -258,6 +258,7 @@ def parse_options(
             opt["path"]["training_states"] = Path(experiments_root) / "training_states"
             opt["path"]["log"] = experiments_root
             opt["path"]["visualization"] = Path(experiments_root) / "visualization"
+            opt["path"]["evaluation"] = Path(experiments_root) / "evaluation"
 
             # change some options for debug mode
             if "debug" in opt["name"]:

@@ -62,7 +62,7 @@ def create_train_val_dataloader(
     opt: dict[str, Any], logger: logging.Logger
 ) -> tuple[data.DataLoader | None, Sampler, list[data.DataLoader], int, int]:
     # create train and val dataloaders
-    train_loader, val_loaders = None, []
+    train_loader, val_loaders, eval_loaders = None, [], []
 
     for phase, dataset_opt in opt["datasets"].items():
         if phase == "train":
@@ -115,12 +115,24 @@ def create_train_val_dataloader(
             )
             logger.info(f"Number of val images/folders: {len(val_set)}")  # type: ignore[reportArgumentType]
             val_loaders.append(val_loader)
+        elif phase.split("_")[0] == "eval":
+            eval_set = build_dataset(dataset_opt)
+            eval_loader = build_dataloader(
+                eval_set,  # type: ignore[reportArgumentType]
+                dataset_opt,
+                num_gpu=opt["num_gpu"],
+                dist=opt["dist"],
+                sampler=None,
+                seed=opt["manual_seed"],
+            )
+            logger.info(f"Number of eval images/folders: {len(eval_set)}")  # type: ignore[reportArgumentType]
+            eval_loaders.append(eval_loader)
         else:
             msg = f"{tc.red}Dataset phase {phase} is not recognized.{tc.end}"
             logger.error(msg)
             sys.exit(1)
 
-    return train_loader, train_sampler, val_loaders, total_epochs, total_iters  # type: ignore[reportPossiblyUnboundVariable]
+    return train_loader, train_sampler, val_loaders, eval_loaders, total_epochs, total_iters  # type: ignore[reportPossiblyUnboundVariable]
 
 
 def load_resume_state(opt: dict[str, Any]):
@@ -236,7 +248,7 @@ def train_pipeline(root_path: str) -> None:
 
     # create train and validation dataloaders
     result = create_train_val_dataloader(opt, logger)
-    train_loader, train_sampler, val_loaders, total_epochs, total_iters = result
+    train_loader, train_sampler, val_loaders, eval_loaders, total_epochs, total_iters = result
 
     # create model
     model = build_model(opt)
@@ -306,6 +318,7 @@ def train_pipeline(root_path: str) -> None:
     print_freq = opt["logger"].get("print_freq", 100)
     save_checkpoint_freq = opt["logger"]["save_checkpoint_freq"]
     val_freq = opt["val"]["val_freq"] if opt.get("val") is not None else 100
+    eval_freq = opt["eval"]["eval_freq"] if opt.get("eval") is not None else 100
 
     # training
     logger.info(
@@ -385,6 +398,14 @@ def train_pipeline(root_path: str) -> None:
                             int(current_iter_log),
                             tb_logger,
                             opt["datasets"]["val"].get("save_img", True),
+                        )
+
+                # evaluation
+                if opt.get("eval") is not None and (current_iter_log % eval_freq == 0):
+                    for eval_loader in eval_loaders:
+                        model.evaluation(  # type: ignore[reportFunctionMemberAccess,attr-defined]
+                            eval_loader,
+                            int(current_iter_log),
                         )
 
                 # data_timer.start()

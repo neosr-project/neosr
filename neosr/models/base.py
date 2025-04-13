@@ -85,6 +85,32 @@ class base:
         else:
             self.nondist_validation(dataloader, current_iter, tb_logger, save_img)
 
+    def dist_model_evaluation(
+        self, dataloader, current_iter: int
+    ) -> None:
+        pass
+
+    def nondist_model_evaluation(
+        self, dataloader, current_iter: int
+    ) -> None:
+        pass
+
+    def evaluation(
+        self, dataloader, current_iter: int
+    ) -> None:
+        """Evaluation function.
+
+        Args:
+        ----
+            dataloader (torch.utils.data.DataLoader): Evaluation dataloader.
+            current_iter (int): Current iteration.
+
+        """
+        if self.opt["dist"]:
+            self.dist_evaluation(dataloader, current_iter)
+        else:
+            self.nondist_evaluation(dataloader, current_iter)
+
     def _initialize_best_metric_results(self, dataset_name: str) -> None:
         """Initialize the best metric results dict for recording the best metric value and iteration."""
         self.best_metric_results: dict[Any, Any]

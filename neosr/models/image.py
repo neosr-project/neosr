@@ -809,6 +809,81 @@ class image(base):
         if self.opt["rank"] == 0:
             self.nondist_validation(dataloader, current_iter, tb_logger, save_img)
 
+    def dist_evaluation(
+        self, dataloader, current_iter: int
+    ) -> None:
+        if self.opt["rank"] == 0:
+            self.nondist_evaluation(dataloader, current_iter)
+
+    def nondist_evaluation(
+        self, dataloader, current_iter: int
+    ) -> None:
+        # flag to not apply augmentation during val
+        self.is_train = False
+        dataset_name = dataloader.dataset.opt["name"]
+        # progress bar
+        use_pbar = self.opt["eval"].get("pbar", True)
+
+        if use_pbar:
+            pbar = tqdm(
+                total=len(dataloader), unit="image", colour="green", ascii=" >="
+            )
+
+        for _, eval_data in enumerate(dataloader):
+            img_name = Path(Path(eval_data["lq_path"][0]).name).stem
+            self.feed_data(eval_data)
+
+            model = (
+                self.net_g_ema
+                if (hasattr(self, "ema") and self.ema > 0)
+                else self.net_g
+            )
+            sf_mode = self.sf_optim_g and self.is_train
+            # set eval mode
+            model.eval()
+            if sf_mode:
+                self.optimizer_g.eval()
+            # inference
+            tile_opt = self.opt["eval"].get("tile", -1)
+            with torch.inference_mode():
+                self.output = self.tile_val() if tile_opt != -1 else model(self.lq)
+            # set train mode
+            model.train()
+            if sf_mode:
+                self.optimizer_g.train()
+
+            visuals = self.get_current_visuals()
+            sr_img = tensor2img([visuals["result"]])
+
+            # tentative for out of GPU memory
+            del self.lq
+            del self.output
+            torch.cuda.empty_cache()
+
+            # check if dataset has save_img option, and if so overwrite global save_img option
+            eval_suffix = self.opt["eval"].get("suffix", None)
+            e_folder = self.opt["path"]["evaluation"]
+            if self.opt["is_train"]:
+                save_img_path = (
+                    Path(e_folder) / img_name / f"{img_name}_{current_iter}.png"
+                )
+            elif eval_suffix is not None:
+                save_img_path = (
+                    Path(e_folder) / dataset_name / f'{img_name}_{self.opt["eval"]["suffix"]}.png'
+                )
+            else:
+                save_img_path = (Path(e_folder) / dataset_name / f'{img_name}_{self.opt["name"]}.png')
+            imwrite(sr_img, str(save_img_path))  # type: ignore[arg-type]
+
+            if use_pbar:
+                pbar.update(1)  # type: ignore[reportPossiblyUnboundVariable]
+                pbar.set_description(f"{tc.light_green}Inferring on {img_name}{tc.end}")  # type: ignore[reportPossiblyUnboundVariable]
+
+        if use_pbar:
+            pbar.close()  # type: ignore[reportPossiblyUnboundVariable]
+
+        self.is_train = True
+
     def _log_validation_metric_values(
         self, current_iter: int, dataset_name: str, tb_logger
     ) -> None:
@@ -925,7 +1000,7 @@ class image(base):
                 if self.opt["val"].get("save_lq", False) or self.opt["val"].get("copy_lq", False):
                     save_lq_img_path = Path(v_folder) / img_name / f"{img_name}_lq.png"
 
-                    if not Path.is_file(save_lq_img_path):
+                    if not Path.exists(save_lq_img_path):
                         original_lq = tensor2img([visuals["lq"]])
                         imwrite(original_lq, str(save_lq_img_path))
 
