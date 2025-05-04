@@ -44,7 +44,7 @@ To update neosr, run:
 neosr-update
 ```
 
-For manual installation details, see our [Installation Instructions](https://github.com/neosr-project/neosr/wiki/Installation-Instructions) wiki.
+For manual installation (recommended for cloud env) details, see our [Installation Instructions](https://github.com/neosr-project/neosr/wiki/Installation-Instructions) wiki.
 
 ## ⏩ quick start
 

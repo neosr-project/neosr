@@ -131,7 +131,7 @@ def build_dataloader(
         msg = f"Wrong dataset phase: {phase}. Supported ones are 'train', 'val' and 'test'."
         raise ValueError(msg)
 
-    dataloader_args["pin_memory"] = dataset_opt.get("pin_memory", True)
+    dataloader_args["pin_memory"] = dataset_opt.get("pin_memory", False)
     dataloader_args["persistent_workers"] = dataset_opt.get("persistent_workers", False)
 
     return data.DataLoader(**dataloader_args)
