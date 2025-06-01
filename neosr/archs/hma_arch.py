@@ -1395,7 +1395,7 @@ def hma_medium(**kwargs):
 def hma_large(**kwargs):
     return hma(
         img_size=48,
-        window_size=24,
+        window_size=16,
         depths=(6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6),
         embed_dim=180,
         num_heads=(6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6),
