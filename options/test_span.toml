@@ -15,6 +15,7 @@ dataroot_lq = 'C:\datasets\val\'
 
 [network_g]
 type = "span"
+#type = "span_fast"
 
 [path]
 pretrain_network_g = 'C:\model.pth'

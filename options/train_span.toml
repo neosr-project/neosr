@@ -42,6 +42,7 @@ val_freq = 1000
 
 [network_g]
 type = "span"
+#type = "span_fast"
 
 [network_d]
 type = "metagan"

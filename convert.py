@@ -7,8 +7,8 @@ import numpy as np
 import onnx
 import onnxruntime
 import torch
-from onnxconverter_common.float16 import convert_float_to_float16
 
+# from onnxconverter_common.float16 import convert_float_to_float16
 # from onnxsim import simplify
 from neosr.archs import build_network
 from neosr.utils.options import parse_options
@@ -237,6 +237,10 @@ def to_onnx() -> None:
         print(f"-------- Model successfully optimized. Saved at: {output_optimized}")
 
     if args.fp16:
+        print(
+            "-------- fp16 conversion has been temporarily disabled due to onnxconverter-common not being maintained."
+        )
+        """
         print("-------- Converting to fp16...")
         output_fp16 = filename + "_fp16" + extension
         # convert to fp16
@@ -251,6 +255,7 @@ def to_onnx() -> None:
         print(
             f"-------- Model successfully converted to half-precision. Saved at: {output_fp16}."
         )
+        """
 
     if args.fulloptimization:
         msg = "ONNXSimplify has been temporarily disabled."

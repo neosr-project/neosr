@@ -1,28 +1,32 @@
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
 [project]
 name = "neosr"
 version = "1.0.0"
 description = "neosr is an open-source framework for training super-resolution models. It provides a comprehensive and reproducible environment for achieving state-of-the-art image restoration results, making it suitable for both the enthusiastic community, professionals and machine learning academic researchers. It serves as a versatile platform and aims to bridge the gap between practical application and academic research in the field."
 readme = "readme.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.13,<3.14"
 keywords = [
   "neosr", "super-resolution", "machine-learning", "image-restoration"
 ]
 authors = [{ name = "neosr-project", email = "132400428+neosr-project@users.noreply.github.com" }]
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 
 dependencies = [
     "einops>=0.8.1",
     "lmdb>=1.6.2",
-    "numpy>=2.2.5",
-    "onnx>=1.17.0",
-    "onnxconverter-common>=1.14.0",
-    "onnxruntime-gpu>=1.21.1",
+    "numpy>=2.2.6",
+    "onnx>=1.18.0",
+#    "onnxconverter-common>=1.14.0",
+    "onnxruntime-gpu>=1.22.0",
     "opencv-python-headless>=4.11.0.86",
     "pywavelets>=1.8.0",
-    "scipy>=1.15.2",
+    "scipy>=1.15.3",
     "tb-nightly>=2.20.0a",
     "torch>=2.7",
     "torchvision>=0.22",
@@ -83,7 +87,7 @@ lint.ignore = [
     "T201",
     "TD",
 ]
-exclude = ["*_arch.py", ".venv/*"]
+exclude = ["*_arch.py", ".venv/*", "uv.lock"]
 preview = true
 
 [tool.ruff.format]

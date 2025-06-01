@@ -73,7 +73,7 @@ Where `config.toml` is a configuration file. Templates can be found in [options]
 | [DAT](https://github.com/zhengchen1999/dat)                                                       | `dat_small`, `dat_medium`, `dat_2` 			|
 | [DITN](https://github.com/yongliuy/DITN)							    | `ditn`				     	      		|
 | [DCTLSA](https://github.com/zengkun301/DCTLSA)						    | `dctlsa`							|
-| [SPAN](https://github.com/hongyuanyu/SPAN)							    | `span`							|
+| [SPAN](https://github.com/hongyuanyu/SPAN)							    | `span`, `span_fast`					|
 | [Real-CUGAN](https://github.com/bilibili/ailab)				  		    | `cugan`			   				|
 | [CRAFT](https://github.com/AVC2-UESTC/CRAFT-SR)		 				    | `craft`			   				|
 | [SAFMN](https://github.com/sunny2109/SAFMN)							    | `safmn`, `safmn_l`					|
@@ -104,6 +104,7 @@ Where `config.toml` is a configuration file. Templates can be found in [options]
 | [ASID](https://github.com/saturnian77/ASID)					| `asid`, `asid_d8`				   |
 | [MoSRV2](https://github.com/umzi2/MoSRV2)					| `mosrv2`					   |
 | [ESC](https://github.com/dslisleedh/ESC)					| `esc`, `esc_fp`, `esc_large`			   |
+| [CATANet](https://github.com/EquationWalker/CATANet)				| `catanet`					   |
 
 > [!NOTE]
 > For all arch-specific parameters, [read the wiki](https://github.com/neosr-project/neosr/wiki/Arch%E2%80%90specific-options).
@@ -112,7 +113,6 @@ Where `config.toml` is a configuration file. Templates can be found in [options]
 
 | arch										| option					   |
 |-------------------------------------------------------------------------------|--------------------------------------------------|
-| [CATANet](https://github.com/EquationWalker/CATANet)				| `catanet`					   |
 
 
 ### [supported discriminators](https://github.com/neosr-project/neosr/wiki/Arch%E2%80%90specific-options#discriminators):
