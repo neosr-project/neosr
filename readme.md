@@ -114,6 +114,7 @@ Where `config.toml` is a configuration file. Templates can be found in [options]
 | arch										| option					   |
 |-------------------------------------------------------------------------------|--------------------------------------------------|
 | [MFG-HMoE](https://github.com/Mr-Bamboo/MFG-HMoE)				| `mfghmoe`					   |
+| [MicroSR](https://github.com/YanHuiGUO/Submission-for-NTIRE-2025-SR-x4-)	| `microsr`					   |
 
 
 ### [supported discriminators](https://github.com/neosr-project/neosr/wiki/Arch%E2%80%90specific-options#discriminators):

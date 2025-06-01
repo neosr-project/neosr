@@ -73,3 +73,4 @@
 | [`ESC`](https://github.com/dslisleedh/ESC)									| [MIT](https://github.com/dslisleedh/ESC/blob/main/LICENSE)							|
 | [`CATANet`](https://github.com/EquationWalker/CATANet)							| [Apache 2.0](https://github.com/EquationWalker/CATANet/blob/main/LICENSE.txt)					|
 | [`MFG-HMoE`](https://github.com/Mr-Bamboo/MFG-HMoE)								| Unknown													|
+| [`MicroSR`](https://github.com/YanHuiGUO/Submission-for-NTIRE-2025-SR-x4-)					| [MIT](https://github.com/YanHuiGUO/Submission-for-NTIRE-2025-SR-x4-/blob/main/LICENSE)			|
