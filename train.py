@@ -191,6 +191,7 @@ def train_pipeline(root_path: str) -> None:
         torch.set_float32_matmul_precision("medium")
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32 = True
+        torch.backends.cuda.matmul.allow_fp16_accumulation = True
 
     # load resume states if necessary
     resume_state = load_resume_state(opt)

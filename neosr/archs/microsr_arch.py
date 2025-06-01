@@ -803,3 +803,14 @@ class microsr(nn.Module):
         if self.rgb_norm:
             x = x / self.img_range + self.mean
         return x
+
+
+@ARCH_REGISTRY.register()
+def microsr_light(**kwargs):
+    return microsr(
+        embed_dim=48,
+        depths=(2, 2, 2, 2),
+        num_heads=(6, 6, 6, 6),
+        window_size=8,
+        **kwargs,
+    )
