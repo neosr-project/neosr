@@ -113,6 +113,7 @@ Where `config.toml` is a configuration file. Templates can be found in [options]
 
 | arch										| option					   |
 |-------------------------------------------------------------------------------|--------------------------------------------------|
+| [MFG-HMoE](https://github.com/Mr-Bamboo/MFG-HMoE)				| `mfghmoe`					   |
 
 
 ### [supported discriminators](https://github.com/neosr-project/neosr/wiki/Arch%E2%80%90specific-options#discriminators):
