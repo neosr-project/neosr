@@ -110,7 +110,7 @@ class dists_loss(nn.Module):
                     url = "https://huggingface.co/neosr/models/resolve/main/dists_weights.pth?download=true"
                     request.urlretrieve(url, model_path)  # noqa: S310
             except:
-                msg = "Could not download TOPIQ weights."
+                msg = "Could not download DISTS weights."
                 raise ValueError(msg)
 
             weights = torch.load(
